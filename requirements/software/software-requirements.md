@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -34,3 +34,12 @@ STK-019 ← SWR-066–070, SWR-074, SWR-082 (complete; no orphans). DoD applied 
 | ID | Requirement | Trace | Verification | Prio | Status |
 |---|---|---|---|---|---|
 | SWR-082 | The navigation groups (fixed teams / project teams / active projects / closed projects) shall be derived **once** on the server from the same profile-and-baseline classification the cockpit uses, and be served as an ordered navigation resource; the HMI header shall render the active groups as directly clickable entries with the current one highlighted, keep closed projects reachable behind a collapsed "weitere (n)" toggle (auto-expanded when the current project sits in it), and leave hash deep-links (`#/board/p3`, including links to closed projects) working unchanged. Empty groups shall not be rendered. | STK-019 | Unit tests (classification shared with cockpit, ordering, closed projects separated, empty groups omitted, nested projects included) + UI checklist (header shows only active entries, click navigates, deep-link to a closed project still resolves) | high | reviewed |
+
+## Nachtrag v1.4 (pm/N-0020 + platform/N-0003, pm/T-0020 + pm/T-0021, PM-Beschlüsse B029/B030)
+
+*Zwei Betriebs-CRs aus dem Briefkasten: der Projekt-Pool war nur eine Datei im Repo und im HMI nirgends zu sehen; und Ticketnummern wiederholen sich über die Repos hinweg (`T-0002` gibt es in `pm`, `p2` und `p10`), was jede projektübergreifende Ansicht mehrdeutig machte. Keine neue Projekt-Baseline — `p9-v1.0` bleibt Abnahmereferenz.*
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-086 | The project pool maintained by the PM team (`pm/management/projekt-pool.md`, pm/D005) shall be served read-only as its own backlog resource, split into the candidate categories of the source document (heading plus its table, parsed with the existing table parser rather than a second copy of that logic), and rendered as an own HMI tab next to the cockpit. A missing pool file shall be reported as such instead of raising, and sections without a table shall not produce empty cards. Creating and starting candidates from the HMI is explicitly **not** part of this requirement (it needs the P10 write path) and the view shall say so. | STK-019 | Unit tests (categories preserved with their tables, missing file handled, text-only section skipped) + UI checklist (tab shows the candidates on desktop and phone) | high | reviewed |
+| SWR-087 | Ticket numbers are unique per repository only. Every API that exposes a ticket shall therefore also carry its unambiguous organisation-wide reference `<projekt>/T-xxxx`, derived in exactly **one** place on the server and reused by board, ticket detail, cockpit tasks, cockpit decision requests, inbox and decision history, so that the same number in two repositories can never be confused. The HMI shall display that reference wherever a ticket identifier is shown. Existing deep-links, ticket files and board tooling stay unchanged. | STK-019 | Unit tests (single derivation function, same number in two projects yields distinct references, board/detail/cockpit/inbox/history all carry it) + UI checklist | high | reviewed |
