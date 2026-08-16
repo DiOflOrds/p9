@@ -1,9 +1,9 @@
 # Board (generiert von platform/scripts/board.py — nicht von Hand editieren)
 
-Stand: 2026-08-16 · Tickets: 6
+Stand: 2026-08-16 · Tickets: 7
 
 
-## done (6)
+## done (7)
 
 | ID | Titel | Typ | Takt | Rolle | Prio | Sprint | blockiert durch |
 |---|---|---|---|---|---|---|---|
@@ -12,4 +12,5 @@ Stand: 2026-08-16 · Tickets: 6
 | [T-0003](tickets/T-0003.md) | Umsetzung SWR-066–070: Org-Cockpit + projects-Discovery + Steckbriefe | task | einmalig | dev | hoch | 1 | — |
 | [T-0004](tickets/T-0004.md) | DR: G4 Sprint 1 + P9-Abnahme (Baseline p9-v1.0) | decision-request | einmalig | pl | hoch | 1 | — |
 | [T-0005](tickets/T-0005.md) | Stichproben-Befund: ASPICE-Team als festes Team im Org-Cockpit sichtbar | task | einmalig | dev | hoch | 1 | — |
+| [T-0007](tickets/T-0007.md) | Befund (SUP.9): Preflight und Matrix übersahen Projektordner im Sammel-Repo projects/ | finding | einmalig | dev | hoch | 1 | — |
 | [T-0006](tickets/T-0006.md) | CR (pm/N-0012, SWR-074): wiederkehrende Aufgaben von einmaligen unterscheidbar machen | change-request | einmalig | dev | mittel | 1 | — |
