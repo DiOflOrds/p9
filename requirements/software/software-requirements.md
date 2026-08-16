@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103, SWR-104 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19). v1.10: +SWR-104 (Betriebs-CR pm/T-0032 Teil 2 aus Brief pm/N-0025 — Uhrzeit-Takt, Routine-Session 2026-08-16 23:06).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103, SWR-104, SWR-105 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19). v1.10: +SWR-104 (Betriebs-CR pm/T-0032 Teil 2 aus Brief pm/N-0025 — Uhrzeit-Takt, Routine-Session 2026-08-16 23:06). v1.11: +SWR-105 (Betriebs-CR platform/T-0003 aus der Auftraggeberfrage vom 2026-08-17 — CI-Status ohne Zugangsdaten prüfen).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -213,3 +213,30 @@ Regel ihre Nachbarn zurückgelassen hatte, und **alle 400 Tests waren dabei grü
 Beides ist behoben und mit je einem Regressionstest belegt (Suite **402**). Die Gegenprobe läuft
 gegen den Commit, der den Fehler trug: `test_frist_mit_uhrzeit_laesst_die_kachel_nicht_platzen`
 scheitert dort nachweislich.
+
+## Nachtrag v1.11 (Auftraggeberfrage 2026-08-17, platform/T-0003)
+
+*Betriebs-CR: „Was muss ich tun, damit der Configmanager GitHub-Commits selbst überprüft?" Antwort
+auf die Rechtefrage: **nichts** — die Repos unter `DiOflOrds` sind öffentlich, die Actions-API
+antwortet ohne Anmeldung. Damit entfällt der Klasse-A-Vorgang (Zugänge, Playbook Kap. 16)
+vollständig; es bleibt reine Werkzeugarbeit. Der Abruf läuft **auf dem Host**, nicht in der
+Cowork-Sandbox: die hat keinen GitHub-Zugang, und ein Geheimnis gäbe es hier ohnehin nicht zu
+verwahren. Schließt die Mensch-Aufgabe aus `pm/T-0010`, `pm/T-0013` und `pm/T-0026`
+(„ein Blick auf die Actions-Seite").*
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-105 | The organisation shall be able to verify from the host, **without any GitHub credentials**, whether the CI runs for the commits it has just pushed finished successfully. A check script shall derive the repositories to inspect from the existing discovery — a repository qualifies only if it has both an `origin` remote and at least one workflow file — and shall report per repository exactly one state: green **for the pushed commit**, red, still running, or no run yet for that commit. **A run that is green for a different commit shall never count as green for the current one:** the run's head SHA shall be matched against the local commit, and "no run yet" shall be reported as such and never folded into green — the same "stale unless proven fresh" rule as `session.stille` and `zuletzt_erledigt`. A repository carrying a workflow file but **no remote** shall be reported as "no CI expected" instead of being silently skipped, so that a gate which exists only as a file is visible as one. Because the repositories are public the check shall use the **unauthenticated** Actions API and shall therefore hold a request budget across its polling rounds; an exhausted rate limit shall be reported in its own words as an error and never as "no run". The result shall be written **outside** the git repositories — so that checking never dirties a working copy — in both machine-readable and plain-German form, and the script shall exit non-zero unless every inspected repository is green for the pushed commit. It shall replace the five browser tabs of `abschluss.cmd` step [5/5]. | STK-019 | Unit tests (`test_ci_status.py`, all with an injected fetch function — see the note on the network below: discovery requires remote **and** workflow, workflow without remote reported separately, remote slug parsed from HTTPS and SSH form, green only when the head SHA matches, a green run for another commit yields "no run yet", red carries conclusion and run URL, queued/in-progress yields "running", rate limit 403 yields an error distinct from "no run", request budget stops the polling and says so, polling only re-queries non-final repositories, exit code non-zero unless everything is green, report written outside the repositories) + host acceptance (one real run after a push: the file names the pushed SHA and matches the Actions page) | high | reviewed |
+
+**Ehrlich zur Verifikation: der Netzweg ist hier nicht bewiesen.** Die Cowork-Sandbox hat keinen
+GitHub-Zugang (Guardrail 2); **jeder** Test injiziert die Abruffunktion. Damit ist die
+**Auswertung** belegt — SHA-Vergleich, Zustandslogik, Budget, Exit-Code — und die **Abfrage**
+nicht. Das ist der Unterschied zwischen „getestet" und „läuft", und er steht hier, statt in einer
+grünen Zahl zu verschwinden (B027/B038). Der Nachweis für den Netzweg ist der **erste Lauf am
+Host**; bis dahin gilt die Anforderung als umgesetzt, aber nicht als abgenommen.
+
+**Bewusst nicht enthalten:** eine Kachel im Cockpit. Die Prüfung entsteht auf dem Host nach dem
+Push, das Cockpit läuft in der Session — eine Anzeige dafür ist eine eigene Fläche und wäre neben
+diesem Skript B025. Ebenso nicht enthalten: ein Token. Sollten Repos später privat werden, genügt
+eine Fine-grained PAT mit **Actions: Read** und **Metadata: Read** — nichts sonst; das Skript
+nimmt sie über `GITHUB_TOKEN` entgegen, ohne sie je zu speichern.
