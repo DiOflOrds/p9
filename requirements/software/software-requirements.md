@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103, SWR-104 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19). v1.10: +SWR-104 (Betriebs-CR pm/T-0032 Teil 2 aus Brief pm/N-0025 — Uhrzeit-Takt, Routine-Session 2026-08-16 23:06).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -156,3 +156,42 @@ unberührt).*
 | ID | Requirement | Trace | Verification | Prio | Status |
 |---|---|---|---|---|---|
 | SWR-103 | Mission Control shall serve, and show on the cockpit page directly below the "Letzte Session" tile, the current Genesis sprint plan taken from `pm/management/sprint-aktuell.md`: the rows of the plan table (task, role, due, status, reason) and the "Das Wichtigste" block of that same file. The plan table shall be located by a heading recognised **by its beginning** ("## Sprint-Plan…"), not by its exact wording (lesson L-2026-08-16h/B054), and the first table following that heading shall be used. Its timestamp shall come from the **git commit** of the file and never from its text; after two silent cadences (2 × 30 min) or an unreadable timestamp the view shall say the plan is stale rather than present it as current (B038). Each row shall carry a traffic light derived from the existing rule (`board.frist_ampel`): overdue red, ≤ 2 days yellow, later green, no date grey; the named states "dieser Sprint" and "wartet-auf-Mensch" are **not** dates and shall never be rendered green. **The view shall cross-check the plan against the actual backlog:** every ticket that is open (status not `done`/`rejected`) in any discovered repo and appears in **no** plan row shall be reported as `nicht_geplant` with ref and title, and counted. No second copy of the plan shall be written anywhere; the file the session already writes is the only source. | STK-019 | Unit tests (`test_sprint_sicht.py`: heading recognised by prefix in three wordings, first table after the heading wins, table before the heading ignored, missing heading yields an empty plan instead of a substitute, named states not green, date states use the shared `frist_ampel` rule, counters per state, `nicht_geplant` finds a ticket missing from the plan, a fully planned backlog yields an empty `nicht_geplant`, refs written in either `repo/T-xxxx` or bare form both match, staleness reuses the SWR-102 rule, missing file and missing git repo do not raise, `GET /api/sprint` end-to-end) + UI checklist (tile sits under "Letzte Session" on desktop and phone; a ticket left out of the plan is visible without opening anything) | high | reviewed |
+
+## Nachtrag v1.10 (pm/N-0025 Teil 2, pm/T-0032, Routine-Session 2026-08-16 23:06)
+
+*Betriebs-CR: „wiederkehrende aufgaben müssen auch terminiert werden, dann diese erledigt werden
+(z.b. jeden tag, woche um 14 Uhr..)". Teil 1 des Briefs ist SWR-091; dieser Nachtrag trägt den
+Rest. Die Abgrenzung stand vorher schriftlich (`pm/T-0032` Teil 1): **was ohne laufende Session
+feuern muss, gehört zum Host-Scheduler; was nur bemerkt werden muss, ans Ticket.** Der Uhrzeit-Takt
+ist deshalb **keine dritte Taktlogik** neben F14 (`p0/D027`) und den team-mail-Takten
+(SWR-063/064), sondern eine Fälligkeitsfrage — er startet nichts, er meldet nur. Keine Änderung am
+`BOARD.md`-Format (`pm/T-0036`/`T-0038` bleiben unberührt).*
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-104 | The `takt` field shall additionally accept a time of day (`taeglich@HH:MM`, `woechentlich@<Mo–So>-HH:MM`), validated by the board generator; a time shall be accepted **only** for the daily and weekly cadence, because for monthly and longer cadences no rule exists for which day is meant and inventing one would be guessing. Tickets without a time shall behave exactly as before. Tickets shall carry an optional `zuletzt_erledigt` (date, or date and time) recording the progress of a recurring task — a field that is meaningless without `takt` and shall therefore be rejected without it. A recurring ticket shall count as **due** when its cadence time has passed since that last completion; **a missing, unreadable or time-less completion counts as never/earliest done, never as fresh** (a date without a time proves only the start of that day), mirroring the "stale unless proven otherwise" rule of `session.stille`. The derived deadline shall be routed through the **existing** traffic-light rule (`board.frist_ampel`) — one rule, two sources; a second computation would be B033. For that, the traffic light shall compare at **moment** precision instead of day precision, because "today 14:00" is past at 15:00 while the day is not; the statement for pure date deadlines shall stay identical day by day (a date deadline expires at the end of its day), and where only a day is known the deadline counts as passed rather than fresh. Cadence due-ness and traffic light are two facts and shall not be folded into one (B057): the cockpit shall list by due-ness, not by colour. Each cockpit card shall show its due recurring tickets in full alongside the overdue deadlines, naming the **skipped** cadence moment ("überfällig seit HH:MM") rather than claiming completion — if no session runs, nothing fires, and the display shall say so (B038). | STK-019 | Unit tests (`test_board.py::TaktUhrzeitTest`: existing cadences unchanged, syntax split, invalid times and cadences rejected incl. `monatlich@…`, validation of `takt` and `zuletzt_erledigt`, `zuletzt_erledigt` without `takt` rejected, missing completion counts as due, completion before/after the moment, missed session yields the skipped moment and red, date-only completion counts from the start of day, weekly cadence picks the right weekday and steps by 7 days, closed tickets never due, traffic light taken from `frist_ampel`, day-by-day equivalence with the pre-SWR-104 date rule over a full month × month, same-day time deadline red in the afternoon, day-as-reference counts as passed, board column carries the time without changing the column count; `test_org_cockpit.py::TaktFaelligTest`: due cadence in the card with skipped moment and plain-text cadence, cadences without a time excluded, same day/two moments yields two different answers, missing proof counts as due) + UI checklist (the card names the skipped moment on desktop and phone) | medium | reviewed |
+
+**Nachweis:** 20 neue Unit-Tests (Gesamtsuite **400**, vorher 380), jeder mit SWR-104-Bezug im
+Docstring. **Gegenprobe über den echten Abrufweg geführt, nicht über einen Import** (L-2026-08-16h):
+dieselbe Testwelt, dasselbe Ticket (`takt: taeglich@14:00`, `zuletzt_erledigt: 2026-08-15 14:30`),
+beide Server antworten auf `GET /api/cockpit` mit **HTTP 200** — der Server aus `git archive HEAD`
+meldet `ueberfaellig: []`, `unterminiert: 0` und **kein Feld** `takt_faellig`. Das Ticket sah über
+die HMI **kerngesund** aus, während sein 14:00-Termin seit Stunden versäumt war; der Neustand
+meldet an derselben Stelle `seit: 2026-08-16 14:00`, `ampel: rot`. Zweite Gegenprobe über die
+**Skript-Route**, die auch die CI fährt: `board.py --check` beendet sich im Altstand mit **exit 1**
+(*„ungültiger takt: taeglich@14:00"*) und im Neustand mit **exit 0** — der Wunsch aus dem Brief war
+vorher nicht nur unbeantwortet, er war **nicht aufschreibbar**.
+
+**Der Befund dieses Laufs (B058), in eigener Sache.** Die Umstellung von der Tages- auf die
+Momentregel war nicht geplant und ist beim Schreiben des ersten Tests aufgefallen: der abgeleitete
+Termin „heute 14:00" hätte um 15:00 die Farbe **gelb** („heute fällig") bekommen, weil
+`frist_ampel` Tage vergleicht. Damit hätte ausgerechnet der versäumte Takt so ausgesehen wie ein
+noch offener — dieselbe Faltung zweier Fakten wie in **B057**. Die Regel liegt jetzt auf Momenten,
+und ein Test vergleicht beide Fassungen für reine Datumsfristen **Tag für Tag über einen ganzen
+Monat gegen jeden Bezugstag desselben Monats** (961 Vergleiche), damit die Erweiterung die
+Bedeutung von SWR-091 nicht verschiebt.
+
+**Bewusst nicht enthalten:** ein Scheduler. Läuft keine Session, feuert nichts — die Anzeige sagt
+dann „überfällig seit HH:MM". Das ist die ehrliche Grenze dieser Umsetzung (T-0032 Teil 1,
+Entscheidung 4) und keine stille Falschaussage (B038). Eine Aufgabe, die **ohne** Session laufen
+muss, gehört in die Windows-Aufgabenplanung neben den Mail-Autopiloten — nicht in das `takt`-Feld.
