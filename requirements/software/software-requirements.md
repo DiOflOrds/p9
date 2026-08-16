@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -86,3 +86,32 @@ Projekt-Baseline — `p9-v1.0`/`p10-v1.0` bleiben Abnahmereferenz.*
 Docstring. Wiederverwendet statt neu gebaut: `board.projekt_pfade` zur Projekt-Discovery/-
 Nummerierung (dieselbe Quelle wie Preflight/Matrix), `board.lade_tickets`/`board.validiere_alle`/
 `board.generiere_board` zum Prüfen und Rendern des neuen G0-Tickets (keine zweite Board-Logik).
+
+## Nachtrag v1.7 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044)
+
+*Der Auftraggeber: „offene aufgaben müssen erledigt werden, beim PM gibts welche, die offen
+sind, werden aber nicht gemacht, diese müssen auch terminiert werden." Belegt an `pm/T-0025`
+(sechs Sessions offen, Agenda nannte es die ganze Zeit — als Randnotiz). Ursache: Nur
+Decision-Requests hatten ein Zeitkonzept (`frist`/`default`); ein CR mit `prio: mittel` konnte
+beliebig lange liegen, ohne dass ein Werkzeug das gemeldet hätte. Die Frist-Ampel existierte
+bereits — als Inline-Kopie in `aggregation.cockpit`, nur für DRs. Diese Anforderung führt sie
+zusammen, statt sie ein zweites Mal zu schreiben (Lesson B033). Kein neuer Takt und keine
+Änderung am BOARD.md-Format: Formatänderungen am Board haben am 16.08. schon einmal alle
+Prüf-Workflows rot gemacht und gehören gebündelt zu `pm/T-0013`.*
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-091 | Backlog tickets of every type shall be allowed to carry an optional `frist` (deadline), and that deadline shall be validated for every type — not only for decision-requests, where a typo previously fell back silently to "no deadline". Validation shall reject dates that merely look right but are not real calendar days (`2026-13-01`), for `frist` and `erstellt` alike, through one shared check. The deadline-to-traffic-light rule (red = passed, yellow = due within two days, green = later, grey = none or unreadable) shall exist exactly once (`board.frist_ampel`) and shall be used both by the open decision-requests and by the backlog deadlines; a ticket counts as overdue only while it is still open (`board.ist_ueberfaellig`) — a passed deadline on a closed ticket is history, not an accusation. Each cockpit card shall show its overdue tickets in full and ahead of the status counts (never folded into the three-item task list), each with deadline and days over, plus a count of open, non-recurring backlog tickets that carry no deadline at all ("ohne Frist") so that an untimed ticket is named as untimed instead of passing as merely open. | STK-019 | Unit tests (`test_board.py::FristTest`: traffic-light steps incl. day-by-day equivalence with the removed inline copy, overdue only while open, no deadline = never overdue, deadline validated for change-request/problem/task, decision-request regression, impossible dates; `test_org_cockpit.py::UeberfaelligTest`: overdue list with days-over, closed tickets excluded, untimed counter excludes recurring tickets, DR traffic light comes from `board.frist_ampel`) + UI checklist (cockpit card shows the overdue block above the status pills, on desktop and phone) | high | reviewed |
+
+**Nachweis:** 11 neue Unit-Tests (Gesamtsuite 329, vorher 318), jeder mit SWR-091-Bezug im
+Docstring. **Gegenprobe geführt:** gegen den Altstand (Frist-Prüfung nur im
+decision-request-Zweig, reine Formprüfung des Datums, Ampel inline im Cockpit) scheitern
+`test_frist_wird_auch_bei_change_request_geprueft`,
+`test_unmoegliches_datum_faellt_nicht_auf_grau_zurueck` und
+`test_ueberfaelliges_backlog_ticket_steht_in_der_kachel` nachweislich.
+**Zusammengeführt statt kopiert:** `aggregation.cockpit` rechnet die DR-Ampel nicht mehr
+selbst, sondern fragt `board.frist_ampel` — dieselbe Funktion, die die Backlog-Fristen
+bewertet; ein Test vergleicht beide über einen ganzen Monat Tag für Tag.
+**Bewusst nicht enthalten:** der Uhrzeit-Takt („jeden Tag um 14 Uhr") aus demselben Brief —
+er berührt F14 (Session-Takt, p0/D027) und ist als `pm/T-0032` mit eigener Frist getrennt
+eingeplant, damit keine dritte Taktlogik neben Session- und team-mail-Takt entsteht.
