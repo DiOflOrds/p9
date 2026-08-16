@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103, SWR-104, SWR-105 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19). v1.10: +SWR-104 (Betriebs-CR pm/T-0032 Teil 2 aus Brief pm/N-0025 — Uhrzeit-Takt, Routine-Session 2026-08-16 23:06). v1.11: +SWR-105 (Betriebs-CR platform/T-0003 aus der Auftraggeberfrage vom 2026-08-17 — CI-Status ohne Zugangsdaten prüfen).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103, SWR-104, SWR-105, SWR-106 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19). v1.10: +SWR-104 (Betriebs-CR pm/T-0032 Teil 2 aus Brief pm/N-0025 — Uhrzeit-Takt, Routine-Session 2026-08-16 23:06). v1.11: +SWR-105 (Betriebs-CR platform/T-0003 aus der Auftraggeberfrage vom 2026-08-17 — CI-Status ohne Zugangsdaten prüfen). v1.12: +SWR-106 (Betriebs-CR pm/T-0041 — Terminierung auf Sprints statt auf Kalenderdaten).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -240,3 +240,37 @@ Push, das Cockpit läuft in der Session — eine Anzeige dafür ist eine eigene 
 diesem Skript B025. Ebenso nicht enthalten: ein Token. Sollten Repos später privat werden, genügt
 eine Fine-grained PAT mit **Actions: Read** und **Metadata: Read** — nichts sonst; das Skript
 nimmt sie über `GITHUB_TOKEN` entgegen, ohne sie je zu speichern.
+
+## Nachtrag v1.12 (Auftraggeber 2026-08-17, pm/T-0041)
+
+*Betriebs-CR: „terminierung bitte nicht auf datum, sondern auf sprint. Aktuell wird ASPICE Routine
+session jede stunde ausgeführt. Das ist ein Sprint. Alle Aufgaben müssen auf die Sprint's
+aufgeplant werden". `pm/D006` erklärt jeden Routine-Lauf zum Sprint; geplant wurde bis hierher
+trotzdem auf Kalenderdaten. Bei **stündlichem** Takt sind das rund **24 Sprints am Tag** — „23.08."
+wäre etwa Sprint 150, ein Abstand, den niemand umrechnet.*
+
+*Drei Entscheidungen des Auftraggebers: **(1)** `frist` und `geplant_sprint` laufen **parallel**;
+**(2)** die nächsten Sprints tragen feste Nummern, alles dahinter ist eine geordnete
+**Warteschlange**; **(3)** Feld, Zähler, Plandatei und Kachel in **einem** Zug — vier Flächen, was
+das Playbook B025 nennt. Zu (1) hat das Team die bekannte Schwäche benannt (zwei Angaben zu „wann
+ist es dran" driften, B033); sie wird deshalb **geprüft statt vorausgesetzt**. Zu (3) ist die
+Gegenmaßnahme, dass keine der vier Flächen eine **neue** Regel erfindet.*
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-106 | Planning shall use **sprints** as its unit instead of calendar dates, one sprint being one routine run. The organisation shall keep a single append-only register (`pm/management/sprints.jsonl`, one line per sprint with number, run identifier, start and cadence in minutes) as the **only** place that knows which run is current; the number shall **not** be derived from git history, because one session writes many commits and commits are therefore not runs (B056, evidenced by 42 commits over roughly 30 runs). Opening a sprint shall be **idempotent through a caller-supplied run identifier** — the same run starting twice shall not advance the counter, and the identity of a run shall be a fact the run states rather than one inferred from a time window. An unreadable register line shall be skipped without stopping the counter and without resetting it to zero. Tickets shall carry an optional `geplant_sprint` (a plain number or `Sprint 42`), validated; vague values such as "soon" or "next sprint" shall be rejected, since an intention is not a plan. Recurring tickets (`takt`) shall carry **no** sprint number — they run in every sprint, and a number beside the cadence field would be a second statement about the same thing (B033). Each planned row shall be marked **fixed** within the next `HORIZONT` sprints and **queue** beyond it: the same number, with its bindingness spoken rather than implied, because at 24 sprints a day a number 150 runs out would be false precision. A sprint number shall never receive a date traffic light. Since `frist` and `geplant_sprint` are kept in parallel by decision of the client, they shall answer **two different questions** — the deadline promised outside the team, and the run in which the team touches it — and every ticket whose planned sprint would fall after its own deadline **even at an uninterrupted cadence** shall be reported as a contradiction, above the plan table, not below it. | STK-019 | Unit tests (`test_sprint_planung.py`: empty register is sprint 0 not 1, counter increments, same run identifier does not advance it, missing identifier rejected, broken line neither stops nor resets the counter, cadence read from the last entry, time estimate arithmetic incl. a past sprint; field parsed in both spellings, vague values rejected, validation reports them; contradiction reported when the sprint falls after the deadline, not when it falls before, only the most favourable case counts, closed tickets and empty fields exempt; sprint number is not a date and never green, a sprint number beats a date in the same cell, cadence wording does not look unplanned, horizon splits fixed from queue, counters keep both apart, date rows keep working) + UI checklist (tile shows the current sprint number and cadence, marks queue rows, shows contradictions above the table) | high | reviewed |
+
+**Nachweis:** 20 neue Unit-Tests (Gesamtsuite **444**, vorher 424). **Gegenprobe über den echten
+Bestand geführt** (Regel 1 aus L-2026-08-16h): die Sicht gegen die 16 Repos gestartet meldet
+`Sprint 1`, **17 Planzeilen**, `dieser_sprint: 6`, `fest_geplant: 5`, `warteschlange: 6`,
+`nicht_geplant: []` und `widersprueche: []` — und beim Zwischenstand hat derselbe Lauf
+`pm/T-0041` als **nicht geplant** gemeldet, weil das Ticket vor seiner Planzeile existierte. Der
+Bestandsabgleich aus SWR-103 hat also die Umstellung überwacht, die ihn erweitert.
+
+**Ehrlich zur Schätzung.** `sprint_register.geschaetzte_zeit` rechnet Takt × Abstand und ist eine
+**Schätzung**, keine Zusage: steht die Cowork-App still, kommt der Sprint später. Sie existiert
+ausschließlich für die Widerspruchsprüfung und wird nirgends als Termin angezeigt — genau deshalb
+bleibt `frist` das Feld für Zusagen.
+
+**Sprint 1 ist der erste Lauf nach der Umstellung.** Rückwirkend wird nicht nummeriert; die Läufe
+davor ließen sich nur aus Commits schätzen, und das wäre B056 ein zweites Mal.
