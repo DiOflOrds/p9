@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103, SWR-104, SWR-105, SWR-106 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19). v1.10: +SWR-104 (Betriebs-CR pm/T-0032 Teil 2 aus Brief pm/N-0025 — Uhrzeit-Takt, Routine-Session 2026-08-16 23:06). v1.11: +SWR-105 (Betriebs-CR platform/T-0003 aus der Auftraggeberfrage vom 2026-08-17 — CI-Status ohne Zugangsdaten prüfen). v1.12: +SWR-106 (Betriebs-CR pm/T-0041 — Terminierung auf Sprints statt auf Kalenderdaten).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103, SWR-104, SWR-105, SWR-106, SWR-107 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19). v1.10: +SWR-104 (Betriebs-CR pm/T-0032 Teil 2 aus Brief pm/N-0025 — Uhrzeit-Takt, Routine-Session 2026-08-16 23:06). v1.11: +SWR-105 (Betriebs-CR platform/T-0003 aus der Auftraggeberfrage vom 2026-08-17 — CI-Status ohne Zugangsdaten prüfen). v1.12: +SWR-106 (Betriebs-CR pm/T-0041 — Terminierung auf Sprints statt auf Kalenderdaten). v1.13: +SWR-107 (platform/T-0004 — ein rotes CI-Ergebnis nennt den fehlgeschlagenen Schritt; Anlass: der erste Hostlauf von SWR-105 fand drei rote Repos und konnte für zwei die Ursache nicht nennen).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -274,3 +274,30 @@ bleibt `frist` das Feld für Zusagen.
 
 **Sprint 1 ist der erste Lauf nach der Umstellung.** Rückwirkend wird nicht nummeriert; die Läufe
 davor ließen sich nur aus Commits schätzen, und das wäre B056 ein zweites Mal.
+
+## Nachtrag v1.13 (platform/T-0004, Sprint 2 2026-08-17)
+
+*Der **erste Hostlauf** von SWR-105 hat drei rote Repos gemeldet — `p3`, `p5`, `platform` — und
+damit genau das geleistet, wofür er gebaut wurde. Er hat aber auch seine Grenze gezeigt: er sagt
+`ROT` und nicht **warum**. Für `platform` ließ sich die Ursache lokal nachstellen (`pm/T-0042`);
+für `p3` und `p5` nicht, und die naheliegende Erklärung — Board-Format und Push-Reihenfolge —
+wurde durch `p7` **widerlegt** (derselbe Commit-Zeitpunkt auf die Sekunde, dieselbe Workflow-Datei,
+grün). Was bleibt, steht in der Lauf-Ausgabe: eine Abfrage entfernt, öffentlich, unangemeldet.*
+
+*Ein `ROT` ohne Schritt ist eine Farbe, kein Befund — es lässt genau die Lücke offen, die SWR-105
+schließen sollte: dass ein Mensch eine Seite öffnen muss.*
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-107 | For every repository reported **red**, the CI status check shall additionally name the **job** and the **step** that failed, obtained from the unauthenticated jobs endpoint of the run it has just judged (`GET /repos/{slug}/actions/runs/{id}/jobs`). The lookup shall use the run id **of the red run**, not of the first run in the list. It shall be made **once per red repository and only after** the polling loop has ended, because red is a final state and a repeated lookup would spend the hourly quota for nothing; green, running and unrun repositories shall trigger **no** lookup at all. The lookup shall count against the **same** request budget and appear in the **same** `abfragen` figure — a second, silent counter would be the duplicate-source fault B033. If the lookup fails for any reason — exhausted budget, network error, unexpected payload, a failed job whose steps all report success — the repository shall **remain red** and the report shall say *"step unknown"*; a diagnosis that swallows a finding is worse than no diagnosis (B038). Where no failing step can be identified but a failing job can, the **job name** shall be reported instead of nothing. | STK-019 | Unit tests (`test_ci_status.py`, injected fetch: red repository names job and step; the run id of the red run is used and not that of the first listed run; a green repository triggers no jobs request; a failing jobs request leaves the state red and yields "step unknown"; a failed job without a failed step falls back to the job name; the lookups are counted in `abfragen`; an exhausted budget suppresses the lookups, is reported in the machine-readable field **and** in the text, and a sufficient budget leaves that field false; a payload of unexpected shape — list instead of object, non-object entries, non-list steps — yields "step unknown" and never an exception; `neutral` counts as no failure just like `skipped`; several failed jobs are counted rather than reduced to the first; a successful lookup that names no job says why) + host acceptance (one real run: the report names a step for a red repository) | high | reviewed |
+
+**Ehrlich zur Verifikation — dieselbe Grenze wie bei SWR-105.** Jeder Test injiziert die
+Abruffunktion; die Cowork-Sandbox hat keinen GitHub-Zugang (Guardrail 2, in diesem Sprint erneut
+bestätigt). Belegt ist damit die **Auswertung**, nicht die **Abfrage**. Der Nachweis für den
+Netzweg ist der erste Hostlauf, der einen Schritt benennt — bis dahin steht das hier und nicht in
+einer grünen Zahl (B027/B038).
+
+**Warum die Nachfrage nach der Warteschleife steht und nicht in ihr.** In der Schleife wird
+gefragt, *ob* ein Repo fertig ist; die Diagnose gilt einem Zustand, der sich nicht mehr ändert.
+Beides zu vermischen hieße, für jedes rote Repo in jeder Runde erneut zu fragen — bei 60 Abfragen
+je Stunde die sicherste Art, das Budget an eine Antwort zu verlieren, die schon vorliegt.
