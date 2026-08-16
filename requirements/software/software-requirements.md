@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -144,3 +144,15 @@ Läufe), und Commits über eine Zeitlücke zu Sessions zu bündeln unterschätzt
 `16:35:24` und `16:51:41` liegen 16 Minuten und **zwei verschiedene** Sessions. Eine Zahl, die sich
 wie eine Messung liest und eine Heuristik ist, wäre B027/B038. Gezählt wird, was belegbar ist, und
 das Feld heißt auch so.
+
+## Nachtrag v1.9 (pm/D006, pm/T-0016, Routine-Session 2026-08-16 22:19)
+
+*Betriebs-CR: Mit `pm/D006` ist jeder Routine-Lauf ein vollwertiger Genesis-Gesamtsprint; der PM
+plant alle offenen Aufgaben aller Repos in `pm/management/sprint-aktuell.md`. Diese Workflow-Sicht
+existierte nur als Datei — kein HMI-Endpunkt hat sie ausgeliefert. Es wird **kein zweiter Text**
+erzeugt (B033). Kein neuer Takt, keine Änderung am `BOARD.md`-Format (`pm/T-0036`/`T-0038` bleiben
+unberührt).*
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-103 | Mission Control shall serve, and show on the cockpit page directly below the "Letzte Session" tile, the current Genesis sprint plan taken from `pm/management/sprint-aktuell.md`: the rows of the plan table (task, role, due, status, reason) and the "Das Wichtigste" block of that same file. The plan table shall be located by a heading recognised **by its beginning** ("## Sprint-Plan…"), not by its exact wording (lesson L-2026-08-16h/B054), and the first table following that heading shall be used. Its timestamp shall come from the **git commit** of the file and never from its text; after two silent cadences (2 × 30 min) or an unreadable timestamp the view shall say the plan is stale rather than present it as current (B038). Each row shall carry a traffic light derived from the existing rule (`board.frist_ampel`): overdue red, ≤ 2 days yellow, later green, no date grey; the named states "dieser Sprint" and "wartet-auf-Mensch" are **not** dates and shall never be rendered green. **The view shall cross-check the plan against the actual backlog:** every ticket that is open (status not `done`/`rejected`) in any discovered repo and appears in **no** plan row shall be reported as `nicht_geplant` with ref and title, and counted. No second copy of the plan shall be written anywhere; the file the session already writes is the only source. | STK-019 | Unit tests (`test_sprint_sicht.py`: heading recognised by prefix in three wordings, first table after the heading wins, table before the heading ignored, missing heading yields an empty plan instead of a substitute, named states not green, date states use the shared `frist_ampel` rule, counters per state, `nicht_geplant` finds a ticket missing from the plan, a fully planned backlog yields an empty `nicht_geplant`, refs written in either `repo/T-xxxx` or bare form both match, staleness reuses the SWR-102 rule, missing file and missing git repo do not raise, `GET /api/sprint` end-to-end) + UI checklist (tile sits under "Letzte Session" on desktop and phone; a ticket left out of the plan is visible without opening anything) | high | reviewed |
