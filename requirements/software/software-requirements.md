@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -65,3 +65,24 @@ Docstring. Wiederverwendet statt neu gebaut: `aggregation.pool_abschnitte`/`pars
 Lesen (Duplikat-Prüfung gegen die vorhandene Tabelle statt einer zweiten Parser-Kopie), das
 Commit-mit-Rücknahme-Muster aus `tickets.py` zum Schreiben (Lesson 2026-08-16: keine zweite
 Tabellen- oder Commit-Logik).
+
+## Nachtrag v1.6 (pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16)
+
+*Direkte Fortsetzung von SWR-088 — derselbe Ticketauftrag, der zweite, größere Schreibvorgang.
+Nur Technik-Kandidaten: Team-Kandidaten brauchen die vollere Team-Gründung aus `intake.md`
+(Steckbrief, Profil, Datenklasse, Zugänge) und sind laut Ticket bewusst nicht im Umfang.
+**Variante A** aus dem Ticket gebaut (keine Antwort auf die A/B-Rückfrage im Briefkasten, Default
+laut Ticket) — der Knopf entscheidet nichts, er bereitet einen G0-Antrag vor (Playbook Kap. 16,
+Klasse A bleibt beim Menschen). Projekt-Nummerierung und BOARD.md-Erzeugung laufen über dieselbe
+Discovery/Generierung wie Board, Matrix und Preflight (`board.projekt_pfade`,
+`board.generiere_board`) — keine zweite Kopie (Lesson p9/T-0007, pm/T-0026). Keine neue
+Projekt-Baseline — `p9-v1.0`/`p10-v1.0` bleiben Abnahmereferenz.*
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-089 | The Projekt-Pool tab shall offer a way to "start" a technical candidate: it creates a new project folder `projects/p<N>` (next free number, derived from the same discovery board/matrix/preflight use) containing a draft project order (`docs/01-projektauftrag.md`), an empty decision log, a `steckbrief.yaml`, and a G0 decision-request ticket (`T-0001`, options G0a/G0b/G0c, one-week deadline, default G0a) plus its BOARD.md — folder and G0 request land in exactly one commit to the `projects` repo with recognizable origin ("Mensch via HMI"); a failing commit leaves nothing on disk. Team candidates are rejected with a plain-German pointer to the full team-founding path instead. On success the candidate is removed from the pool in a second commit to `pm`; if only that second commit fails, the already-committed project is kept (not rolled back) and the response says so in plain German instead of only logging it (lesson from pm/T-0024/B038: a silent failure mode is worse than a loud one). The button itself decides nothing — the human still answers the G0 request. | STK-019 | Unit tests (`platform/tests/test_pool_starten.py`: technical-only, numbering across top-level and collection repo, ticket validity, BOARD.md, pool removal, two commits with recognizable origin, rollback on failed project commit, project kept + plain-German warning on failed pool-removal commit, rejection of unknown/team candidates and of characters that would break the ticket frontmatter or table, HTTP wiring incl. PIN) + UI checklist (form works on desktop and phone, PIN required remotely, message shows the created G0 reference) | medium | reviewed |
+
+**Nachweis:** 20 neue Unit-Tests (Gesamtsuite 305, vorher 285), jeder mit SWR-089-Bezug im
+Docstring. Wiederverwendet statt neu gebaut: `board.projekt_pfade` zur Projekt-Discovery/-
+Nummerierung (dieselbe Quelle wie Preflight/Matrix), `board.lade_tickets`/`board.validiere_alle`/
+`board.generiere_board` zum Prüfen und Rendern des neuen G0-Tickets (keine zweite Board-Logik).
