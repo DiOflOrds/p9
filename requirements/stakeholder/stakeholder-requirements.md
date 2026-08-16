@@ -8,4 +8,4 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–069 (complete; no orphans).
+STK-019 ← SWR-066–070 (complete; no orphans).

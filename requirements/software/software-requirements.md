@@ -11,4 +11,10 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–069 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002).
+STK-019 ← SWR-066–070 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002).
+
+## Nachtrag v1.1 (pm/D003, N-0008)
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-070 | Discovery, board tooling, cockpit and baselines shall support project folders nested inside the `projects` collection repo (a project = folder with `tickets/` whose enclosing git root is `projects`); board status transitions, commits and closure tags (`p10-v1.0`) operate on the enclosing repo; existing top-level repos keep working unchanged. | STK-019 | Unit tests (nested discovery, board ops on enclosing repo) + checklist | high | reviewed |
