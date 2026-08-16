@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -43,3 +43,25 @@ STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087 (complete; no orph
 |---|---|---|---|---|---|
 | SWR-086 | The project pool maintained by the PM team (`pm/management/projekt-pool.md`, pm/D005) shall be served read-only as its own backlog resource, split into the candidate categories of the source document (heading plus its table, parsed with the existing table parser rather than a second copy of that logic), and rendered as an own HMI tab next to the cockpit. A missing pool file shall be reported as such instead of raising, and sections without a table shall not produce empty cards. Creating and starting candidates from the HMI is explicitly **not** part of this requirement (it needs the P10 write path) and the view shall say so. | STK-019 | Unit tests (categories preserved with their tables, missing file handled, text-only section skipped) + UI checklist (tab shows the candidates on desktop and phone) | high | reviewed |
 | SWR-087 | Ticket numbers are unique per repository only. Every API that exposes a ticket shall therefore also carry its unambiguous organisation-wide reference `<projekt>/T-xxxx`, derived in exactly **one** place on the server and reused by board, ticket detail, cockpit tasks, cockpit decision requests, inbox and decision history, so that the same number in two repositories can never be confused. The HMI shall display that reference wherever a ticket identifier is shown. Existing deep-links, ticket files and board tooling stay unchanged. | STK-019 | Unit tests (single derivation function, same number in two projects yields distinct references, board/detail/cockpit/inbox/history all carry it) + UI checklist | high | reviewed |
+
+## Nachtrag v1.5 (pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16)
+
+*Betriebs-CR, direkte Fortsetzung von SWR-086: Der Pool war seit T-0020 nur lesbar. Setzt auf dem
+P10-Schreibpfad auf (Commit-mit-Rücknahme-Muster aus `tickets.py`), baut aber keinen zweiten
+Schreibmechanismus — eigenes Modul `backend/pool.py`, weil die Zieldatei kein Ticket ist. Der
+zweite Teil des Auftrags ("Starten": Projektordner + G0-Decision-Request) ist bewusst **nicht**
+Teil dieser Anforderung — größerer, riskanterer Schreibvorgang (neuer Ordner, Requirements-
+Grundgerüst, und laut frischem Befund desselben Tages, `pm/T-0026`, CI-/Matrix-Workflows mit
+fester Repo-Liste, die ein neuer Projektordner sonst unsichtbar bricht); gehört in eine eigene
+Session mit eigenem Nachweis. `pm/T-0022` bleibt dafür offen. Keine neue Projekt-Baseline —
+`p9-v1.0`/`p10-v1.0` bleiben Abnahmereferenz.*
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-088 | The Projekt-Pool tab shall offer a PIN-protected form to add a new candidate to either category (team or technical). A team candidate requires a short kebab-case name, a short description and the table's own fields (Nutzen, Voraussetzung); a technical candidate requires a free-text title and its own field (Quelle). New rows are appended at the end of their own category's table, sharing a single running number across both categories; duplicate candidate names are rejected. Every accepted candidate is written to `pm/management/projekt-pool.md` and committed in a single commit with recognizable origin ("Mensch via HMI"); a failing commit leaves the file unchanged, reported in plain German. The candidate appears in the Pool tab on the next read — no server restart required. | STK-019 | Unit tests (`platform/tests/test_pool_kandidat.py`: validation per category, cross-category numbering, end-of-category insertion, duplicate rejection, commit + rollback on failure, HTTP wiring) + UI checklist (form works on desktop and phone, PIN required remotely) | medium | reviewed |
+
+**Nachweis:** 17 neue Unit-Tests (Gesamtsuite 285, vorher 268), jeder mit SWR-088-Bezug im
+Docstring. Wiederverwendet statt neu gebaut: `aggregation.pool_abschnitte`/`parse_md_tabellen` zum
+Lesen (Duplikat-Prüfung gegen die vorhandene Tabelle statt einer zweiten Parser-Kopie), das
+Commit-mit-Rücknahme-Muster aus `tickets.py` zum Schreiben (Lesson 2026-08-16: keine zweite
+Tabellen- oder Commit-Logik).
