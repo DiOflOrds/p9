@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -115,3 +115,32 @@ bewertet; ein Test vergleicht beide über einen ganzen Monat Tag für Tag.
 **Bewusst nicht enthalten:** der Uhrzeit-Takt („jeden Tag um 14 Uhr") aus demselben Brief —
 er berührt F14 (Session-Takt, p0/D027) und ist als `pm/T-0032` mit eigener Frist getrennt
 eingeplant, damit keine dritte Taktlogik neben Session- und team-mail-Takt entsteht.
+
+## Nachtrag v1.8 (pm/N-0032 + pm/N-0033, pm/T-0040, Routine-Session 2026-08-16 21:06)
+
+*Betriebs-CR: Der Auftraggeber will nach jedem geplanten Lauf in Mission Control lesen, was
+passiert ist, statt es in Cowork nachzuschlagen. Die Zusammenfassung existiert bereits — jede
+Routine-Session schreibt sie in `pm/management/session-agenda.md`. Es wird **kein zweiter Text**
+erzeugt, sondern der vorhandene ausgeliefert (B033). Kein neuer Takt, keine Änderung am
+`BOARD.md`-Format (`pm/T-0036`/`T-0038` bleiben davon unberührt).*
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-102 | Mission Control shall serve, and show on the cockpit page above every project card, what the last routine session did: the "Das Wichtigste" block taken verbatim from `pm/management/session-agenda.md`, the commit timestamp of that file, and the number of times the file was written on the current day. The timestamp and the daily count shall be derived from the **git history** and never from the text of the file — a stale file left behind by a missed run would otherwise present its own old "Stand:" line as current (B038); the block's heading line, which carries that text timestamp, shall therefore not be part of the payload. The block heading shall be recognised by its beginning, not by its exact wording (lesson L-2026-08-16h/B054). When the last commit is older than two cadences (2 × 30 min) or unreadable, the tile shall say so in plain German ("seit HH:MM keine Session") instead of showing the old state as fresh; an unreadable timestamp counts as stale, never as fresh. No second copy of the summary shall be written anywhere. Additionally, the letterbox send button shall stay disabled until the conversation has been redrawn, so that a second click in the reload window cannot create a duplicate letter — the click is prevented, no letter is ever silently filtered (B050). | STK-019 | Unit tests (`test_session_kachel.py`: block cut at the next divider, heading with "Stand" excluded, heading recognised by prefix in three wordings, missing block yields empty instead of a substitute text, staleness at the two-cadence boundary day-by-day, unreadable timestamp counts as stale, naive/aware datetime comparison, daily count only for the current day, commit timestamp wins over the text timestamp, missing file and missing git repo do not raise, `GET /api/session` end-to-end) + UI checklist (tile is the first thing on the cockpit page on desktop and phone; double-click on send produces one letter) | high | reviewed |
+
+**Nachweis:** 17 neue Unit-Tests (Gesamtsuite **353**, vorher 336), jeder mit SWR-102-Bezug im
+Docstring. **Gegenprobe geführt — und die erste war wertlos:** gegen den Altstand scheitert die
+Testdatei mit `ImportError: cannot import name 'session'`. Das belegt nur, dass ein Modul fehlt,
+nichts über den Schaden — wörtlich die Lehre **L-2026-08-16h** aus derselben Session. Die zweite
+Gegenprobe läuft deshalb über den **echten Abrufweg**: der Server aus `git archive HEAD`,
+gegen dieselbe Agenda-Datei gestartet, beantwortet `GET /api/session` mit
+**HTTP 404 „unbekannter Endpunkt"** — die Zusammenfassung war über die HMI nicht abrufbar, und
+genau das ist die Beschwerde aus `pm/N-0032`/`N-0033`.
+
+**Bewusst abweichend von der DoD des Tickets (Befund B056):** `pm/T-0040` DoD 1 verlangt „die Zahl
+der **Sessions** des Tages". Geliefert wird `fortschreibungen_heute` — die Zahl der **Commits** auf
+die Agenda. Grund: eine Session schreibt die Datei mehrfach (am 16.08.: **42 Commits** auf rund 30
+Läufe), und Commits über eine Zeitlücke zu Sessions zu bündeln unterschätzt nachweislich — zwischen
+`16:35:24` und `16:51:41` liegen 16 Minuten und **zwei verschiedene** Sessions. Eine Zahl, die sich
+wie eine Messung liest und eine Heuristik ist, wäre B027/B038. Gezählt wird, was belegbar ist, und
+das Feld heißt auch so.
