@@ -11,7 +11,7 @@
 
 ## Traceability
 
-STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103, SWR-104, SWR-105, SWR-106, SWR-107, SWR-108, SWR-109 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19). v1.10: +SWR-104 (Betriebs-CR pm/T-0032 Teil 2 aus Brief pm/N-0025 — Uhrzeit-Takt, Routine-Session 2026-08-16 23:06). v1.11: +SWR-105 (Betriebs-CR platform/T-0003 aus der Auftraggeberfrage vom 2026-08-17 — CI-Status ohne Zugangsdaten prüfen). v1.12: +SWR-106 (Betriebs-CR pm/T-0041 — Terminierung auf Sprints statt auf Kalenderdaten). v1.13: +SWR-107 (platform/T-0004 — ein rotes CI-Ergebnis nennt den fehlgeschlagenen Schritt; Anlass: der erste Hostlauf von SWR-105 fand drei rote Repos und konnte für zwei die Ursache nicht nennen). v1.14: +SWR-108 (platform/T-0006 aus dem Widget-Vertrag team-dashboard/T-0001 — der Cockpit-Payload unterschied „echte Null“ nicht von „nicht geliefert“ und behauptete damit 15-mal eine Messung, die es nicht gibt).
+STK-019 ← SWR-066–070, SWR-074, SWR-082, SWR-086, SWR-087, SWR-088, SWR-089, SWR-091, SWR-102, SWR-103, SWR-104, SWR-105, SWR-106, SWR-107, SWR-108, SWR-109, SWR-110 (complete; no orphans). DoD applied 2026-08-16 (RM). G1 pending (T-0002). v1.2: +SWR-074 (Betriebs-CR T-0006 aus pm/N-0012, PM-Beschluss B014). v1.3: +SWR-082 (Betriebs-CR pm/T-0012 aus pm/N-0015, PM-Beschluss B021). v1.4: +SWR-086/087 (Betriebs-CRs pm/T-0020 aus pm/N-0020 und pm/T-0021 aus platform/N-0003, PM-Beschlüsse B029/B030). v1.5: +SWR-088 (Betriebs-CR pm/T-0022 Teil 1 „Anlegen", Routine-Session 2026-08-16). v1.6: +SWR-089 (Betriebs-CR pm/T-0022 Teil 2 „Starten", Routine-Session 2026-08-16). v1.7: +SWR-091 (Betriebs-CR pm/T-0030 aus Brief pm/N-0025, PM-Beschluss B044, Routine-Session 2026-08-16). v1.8: +SWR-102 (Betriebs-CR pm/T-0040 aus den Briefen pm/N-0032/N-0033, Routine-Session 2026-08-16 21:06). v1.9: +SWR-103 (Betriebs-CR pm/T-0016 nach pm/D006 — Sprint-Workflow-Sicht, Routine-Session 2026-08-16 22:19). v1.10: +SWR-104 (Betriebs-CR pm/T-0032 Teil 2 aus Brief pm/N-0025 — Uhrzeit-Takt, Routine-Session 2026-08-16 23:06). v1.11: +SWR-105 (Betriebs-CR platform/T-0003 aus der Auftraggeberfrage vom 2026-08-17 — CI-Status ohne Zugangsdaten prüfen). v1.12: +SWR-106 (Betriebs-CR pm/T-0041 — Terminierung auf Sprints statt auf Kalenderdaten). v1.13: +SWR-107 (platform/T-0004 — ein rotes CI-Ergebnis nennt den fehlgeschlagenen Schritt; Anlass: der erste Hostlauf von SWR-105 fand drei rote Repos und konnte für zwei die Ursache nicht nennen). v1.14: +SWR-108 (platform/T-0006 aus dem Widget-Vertrag team-dashboard/T-0001 — der Cockpit-Payload unterschied „echte Null“ nicht von „nicht geliefert“ und behauptete damit 15-mal eine Messung, die es nicht gibt).
 
 ## Nachtrag v1.1 (pm/D003, N-0008)
 
@@ -331,3 +331,37 @@ Felder (`static/app.js`, `cockpitKarte`); ein zweiter, der später dazukommt, ha
 Warnung.
 
 v1.15: +SWR-109 (pm/T-0044 — im Sprint-Planning von Sprint 6 gefunden: Sprint 5 hatte fuenf Aufgaben in `sprint-aktuell.md` eine Nummer nach hinten geschoben, ohne die Ticketfelder anzufassen; sieben Planzeilen sagten danach etwas anderes als ihr Ticket, und `nicht_geplant` war zu Recht leer — Anwesenheit ist nicht Uebereinstimmung).
+
+---
+
+## Nachtrag v1.16 (platform/T-0010 — die Verifikation misst die Arbeitskopie, der Push liefert HEAD)
+
+*Betriebs-CR aus dem Startcheck von Sprint 7 (2026-08-17). Keine neue Projekt-Baseline —
+`p9-v1.0` bleibt Abnahmereferenz.*
+
+**Der Anlass, in einem Satz.** Sprint 6 meldete „Matrix **109 SWRs / 0 Lücken**" und pushte —
+aber SWR-109 stand nur in der **Arbeitskopie** von `p9`. In den gepushten Repos standen 108.
+Der Plattformcode und seine Tests waren committet, die Anforderung, die sie erfüllen, nicht:
+das Repository trug drei Sprints lang Code ohne Requirement, und die Traceability-Matrix hat
+das nicht gesehen, weil sie die **Datei** liest, nicht den **Commit**.
+
+| ID | Requirement | Trace | Verification | Prio | Status |
+|---|---|---|---|---|---|
+| SWR-110 | The preflight shall **name** the uncommitted files of each repository instead of only counting them, and shall raise a **finding** — one that makes preflight report other than `STARTKLAR` — when an uncommitted file is a file that a verification artefact **reads**: a requirement document (`requirements/**/software-requirements.md`), a ticket file (`tickets/*.md`) or a `BOARD.md`. Rationale, measured: the trace matrix and the board read the **working copy**, while the push ships **HEAD**; where the two differ in such a file, the reported result describes a state that exists in no repository, and the greener the report the less likely anyone looks. A `BOARD.md` whose uncommitted change touches **only** the `Stand:` line shall be **exempt**, because the tooling regenerates that line on every run: on the day this requirement was written, six repositories were unclean and five of them for exactly that reason, so a finding without the exemption would fire daily and teach its reader to look past the one line that mattered — the same "louder than the fault it looks for" trap that SWR-109 avoids for cadence tickets. The exemption shall be decided on the **diff** and never on the file name alone, so that a `BOARD.md` carrying a real content change is still reported. The count shall remain in the line for the exempt case, so that "clean" and "dirty but harmless" stay distinguishable. | STK-019 | Unit tests (`test_preflight_arbeitskopie.py`: an uncommitted requirement document is a finding and is named; an uncommitted ticket file is a finding; a `BOARD.md` differing only in `Stand:` is no finding and stays visible as a line; a `BOARD.md` with a **further** changed line **is** a finding — the counter-test that would refute a name-based exemption; an unrelated uncommitted file (e.g. `README.md`) is named but is no finding; a clean repository yields nothing; the exemption reads the real `git diff` output and not a rule about the path) | high | reviewed |
+
+**Warum das nicht der Traceability-Matrix zugeschlagen wird.** Der naheliegende Ort wäre
+`trace_matrix.py`: sie könnte ihre Quellen gegen HEAD lesen statt gegen die Platte. Das wäre
+falsch herum. Die Matrix soll beim **Bauen** die Datei sehen, an der gerade gearbeitet wird —
+sonst könnte man eine Anforderung nicht schreiben und im selben Lauf prüfen. Der Fehler liegt
+nicht darin, dass die Matrix die Arbeitskopie liest, sondern darin, dass **niemand** vor dem
+Push gefragt hat, ob das Gemessene auch das Gelieferte ist. Diese Frage gehört dorthin, wo die
+anderen Zustandsfragen stehen (`preflight`), und nicht in das Werkzeug, dessen Ergebnis sie
+prüft — ein Werkzeug, das seine eigene Voraussetzung bestätigt, sagt nichts (B033-Muster).
+
+**Der Preis, benannt.** Preflight wird ab hier **rot** für einen Zustand, der bisher nur eine
+Zeile war. Das ist beabsichtigt und trotzdem ein Risiko: wer mitten in der Arbeit einen
+Preflight laufen lässt, hat eine angefasste Anforderung auf der Platte und bekommt einen
+Befund. Genau dafür gibt es `--skip-tests` als Vorbild — der Befund ist am Sprint**ende**
+gemeint, wo `abschluss.cmd` ihn auswertet. Er blockiert dort den Push, und das ist die
+richtige Stelle: ein Push mit einer ungeschriebenen Anforderung ist der Fehler, den er
+verhindern soll.
