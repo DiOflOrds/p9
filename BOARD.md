@@ -3,13 +3,7 @@
 Stand: 2026-08-20 · Tickets: 8
 
 
-## in_review (1)
-
-| ID | Titel | Typ | Takt | Rolle | Verantwortlich | Prio | Sprint | blockiert durch |
-|---|---|---|---|---|---|---|---|---|
-| [T-0008](tickets/T-0008.md) | Wo leben die Anforderungen der Plattform? — p9 ist abgeschlossen und trägt 81 SWRs, davon die letzten neun aus platform | decision-request | einmalig | pl | Team | niedrig | 26 | — |
-
-## done (7)
+## done (8)
 
 | ID | Titel | Typ | Takt | Rolle | Verantwortlich | Prio | Sprint | blockiert durch |
 |---|---|---|---|---|---|---|---|---|
@@ -20,3 +14,4 @@ Stand: 2026-08-20 · Tickets: 8
 | [T-0005](tickets/T-0005.md) | Stichproben-Befund: ASPICE-Team als festes Team im Org-Cockpit sichtbar | task | einmalig | dev | Team | hoch | 1 | — |
 | [T-0007](tickets/T-0007.md) | Befund (SUP.9): Preflight und Matrix übersahen Projektordner im Sammel-Repo projects/ | finding | einmalig | dev | Team | hoch | 1 | — |
 | [T-0006](tickets/T-0006.md) | CR (pm/N-0012, SWR-074): wiederkehrende Aufgaben von einmaligen unterscheidbar machen | change-request | einmalig | dev | Team | mittel | 1 | — |
+| [T-0008](tickets/T-0008.md) | Wo leben die Anforderungen der Plattform? — p9 ist abgeschlossen und trägt 81 SWRs, davon die letzten neun aus platform | decision-request | einmalig | pl | Team | niedrig | 26 | — |
