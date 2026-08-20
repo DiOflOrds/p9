@@ -7,7 +7,7 @@ Stand: 2026-08-20 · Tickets: 8
 
 | ID | Titel | Typ | Takt | Rolle | Verantwortlich | Prio | Sprint | blockiert durch |
 |---|---|---|---|---|---|---|---|---|
-| [T-0008](tickets/T-0008.md) | Wo leben die Anforderungen der Plattform? — p9 ist abgeschlossen und trägt 81 SWRs, davon die letzten neun aus platform | decision-request | einmalig | pl | MENSCH | niedrig | 26 | — |
+| [T-0008](tickets/T-0008.md) | Wo leben die Anforderungen der Plattform? — p9 ist abgeschlossen und trägt 81 SWRs, davon die letzten neun aus platform | decision-request | einmalig | pl | Team | niedrig | 26 | — |
 
 ## done (7)
 
