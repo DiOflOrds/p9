@@ -1,4 +1,4 @@
-# Organigramm: p9
+# Organigramm: Org-Cockpit
 
 *Generiert aus den Registries (`process/teams/registry.yaml`, `process/roles/besetzungen.yaml`) durch `platform/scripts/organigramm.py` — **nicht von Hand pflegen**, Änderungen gehören in die Registry (Konzept `process/docs/03-rollenmodell-v2-orga-rework.md` Kap. 8).*
 
@@ -9,7 +9,7 @@ graph TB
   MENSCH["Mensch<br/>Auftraggeber / Gates"]
   PM["PM-Team<br/>koordiniert alle PL"]
   MENSCH --> PM
-  p9["p9<br/>entwicklung · aktiv"]
+  p9["Org-Cockpit<br/>entwicklung · aktiv"]
   PM --> p9
 ```
 
