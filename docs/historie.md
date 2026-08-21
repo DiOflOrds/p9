@@ -17,6 +17,7 @@
 | 2026-08-20 | Auftraggeber-Brief: „kann dieses Projekt geschlossen werden? warum gibts das noch?" — Messung: 7/7 done, 78 Commits/Woche, 81 SWRs im Ordner | N-0001, T-0008 |
 | 2026-08-20 22:25 | Entscheid D003: Option A + Anzeigename „Org-Cockpit"; SWR-175 gebaut | D003, SWR-175 |
 | 2026-08-21 | v1.70: SWR-177–184 (Orga-Rework-Nachtrag + neue Sichten, draft) | platform/T-0042 |
+| 2026-08-21 | **Sprint 28:** SWR-189 (Instanzschlüssel = `rolle@einheit`, strukturell **neben** dem Literal), SWR-190 (Goldset-Abdeckung als stehende Prüfung), SWR-135 v1.74 (Frontend-Rückschneidung). Matrix **190 SWRs / 0 Lücken** | v1.73–v1.75 |
 
 ## Lessons Learned
 
