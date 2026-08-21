@@ -30,3 +30,12 @@
 ## Offene Fäden
 
 - Review SWR-177–184 (platform/T-0042).
+
+## Sprint 31 (2026-08-21) — SWR-198 bis SWR-200
+
+Drei Anforderungen auf der P9-Fläche, alle aus `platform`-Tickets desselben Laufs:
+**SWR-198** (Ausnahme am Zustand statt am Typ, gebunden an den `blocked_by`-Verweis),
+**SWR-199** (Grundmenge der Lehren-Prüfung gemessen statt gesetzt — Erweitern und
+Weglassen ergaben dieselbe Menge, also fällt der Filter), **SWR-200** (benannte Menge der
+Code-Schreibwege ins Entscheidungslog, erhoben über den Syntaxbaum).
+Matrix: **200 SWRs / 0 Lücken.** Keine Baseline gesetzt — eine Abnahme ist Klasse A.
