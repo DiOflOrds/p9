@@ -13,6 +13,7 @@
 
 | Datum | Ereignis | Beleg |
 |---|---|---|
+| 2026-08-22 | **Sprint 39** — sechs neue Anforderungen: **`SWR-221`/`222`/`223`** (eine Zusicherung am echten Bestand benennt ihre **eigene** Eingabe; Gegenprobe am vollen Bestand; dieselbe Bauform in JS), **`SWR-224`/`225`** (genau ein Zeitraum im Widget; ein Grund mehrerer Kacheln steht einmal), **`SWR-226`** (die Plantabelle wird an ihren Spalten erkannt, nicht an ihrer Stelle). Bestand **220 → 226 SWRs, 0 Lücken**. | SWR-221…226 |
 | 2026-08-22 | **Sprint 37** — **`SWR-214`, `SWR-215`, `SWR-216`** aufgenommen (213 → 216, `trace_matrix` **0 Lücken**). Gemeinsamer Nenner der ersten beiden, in beiden Anforderungen wörtlich benannt: **ein wahrer Messwert an einem ungelesenen Ort ist von Schweigen nicht zu unterscheiden** — 87 Läufe im Takt-Protokoll (`SWR-214`), 14 Stunden in einer JSON-Datei (`SWR-215`). Beide melden deshalb im **Preflight** und beide ausdrücklich **nicht** als Befund (`SWR-166`). `SWR-216` schliesst die `SWR-211`-Falle von Anfang an: die Ausnahmeliste ist in **beide** Richtungen zugesichert — ein aufgelöster Altbestand wird **ebenfalls** rot. | SWR-214/215/216, platform/T-0066, T-0055, pm/T-0085 |
 | 2026-08-17 | Org-Cockpit gebaut (Discovery projects/, Gruppierung) | T-0001–T-0007 |
 | 2026-08-20 | Auftraggeber-Brief: „kann dieses Projekt geschlossen werden? warum gibts das noch?" — Messung: 7/7 done, 78 Commits/Woche, 81 SWRs im Ordner | N-0001, T-0008 |
